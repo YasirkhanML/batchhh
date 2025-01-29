@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .container {
+            width: 950px;
+            margin: 80px auto;
+            color: black;
+            line-height: 1.5;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .content {
+            display: flex;
+            margin-top: 40px;
+        }
+
+        .icon {
+            background-color: black;
+            border-radius: 30px;
+            padding: 15px;
+            vertical-align: top;
+        }
+
+        .contact-info {
+            display: inline-block;
+            padding: 4px 20px 0px 20px;
+        }
+
+        .address-line {
+            margin-top: 40px;
+        }
+
+        .col-1 {
+            width: 530px;
+        }
+
+        .col-2 {
+            flex: 1 1 auto;
+            background-color: white;
+        }
+
+        .form-container {
+            color: #000;
+            padding: 30px;
+        }
+
+        .contact-info-title {
+            color: #01bdd4;
+        }
+
+        .form-row {
+            padding-bottom: 30px;
+        }
+
+        .form-field {
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid #000;
+        }
+
+        .send-btn {
+            border: 0px;
+            padding: 12px 26px;
+            background-color: #01bdd4;
+            color: white;
+        }
+
+        @media all and (max-width: 1024px) {
+            .container {
+                width: auto;
+                padding: 30px;
+            }
+            .col-1 {
+                width: 360px;
+            } 
+        }
+
+        @media all and (max-width: 700px) {
+            .content {
+                display: block;
+            }
+            .col-2 {
+                margin-top: 40px;
+            } 
+            .col-1 {
+                width: 100%;
+            }
+        }
+
+        @media all and (max-width: 500px) {
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text-center">
+            <h1>Contact Us</h1>
+            <div>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                eiusmod tempor incididunt ut labore <div>et dolore magra aliqua.
+                Ut enim ad minim veniam.</div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="col-1">
+                <div class="address-line">
+                    <i class="fa-solid fa-location-dot" onclick="getLocation()" style="cursor: pointer;"></i>
+                    <div class="contact-info">
+                        <div class="contact-info-title">Address</div>
+                        <div>1002 West 5th Ave,</div>
+                        <div>Alaska, New York,</div>
+                        <div>55060.</div>
+                    </div>
+                </div>
+                <div class="address-line">
+                    <i class="fa-solid fa-phone"></i>
+                    <div class="contact-info">
+                        <div class="contact-info-title">Phone</div>
+                        <div>0300-0099878</div>
+                    </div>
+                </div>
+                <div class="address-line">
+                    <i class="fa-regular fa-envelope"></i>
+                    <div class="contact-info">
+                        <div class="contact-info-title">Email</div>
+                        <div>jensen decor@gmail.com</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <form>
+                    <div class="form-container">
+                        <h2>Send Message</h2>
+                        <div class="form-row">
+                            <label>Full Name</label>
+                            <div>
+                                <input type="text" class="form-field" placeholder="Enter your full name">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <label>Email</label>
+                            <div>
+                                <input type="email" class="form-field" placeholder="Enter your email">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <label>Type your message...</label>
+                            <div>
+                                <textarea class="form-field" placeholder="Write your message" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <input type="button" class="send-btn" value="Send">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <p id="output" style="margin-top: 20px; text-align: center; font-size: 16px; color: red;"></p>
+    </div>
+
+    <script>
+        function getLocation() {
+            const output = document.getElementById("output");
+
+            // Check if geolocation is available
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+
+                        // Display the fetched latitude and longitude
+                        output.textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
+
+                        // Open Google Maps centered on the fetched location
+                        const googleMapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
+                        window.open(googleMapsUrl, '_blank');
+                    },
+                    (error) => {
+                        // Handle error scenarios
+                        switch (error.code) {
+                            case error.PERMISSION_DENIED:
+                                output.textContent = "User denied the request for Geolocation.";
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                output.textContent = "Location information is unavailable.";
+                                break;
+                            case error.TIMEOUT:
+                                output.textContent = "The request to get user location timed out.";
+                                break;
+                            case error.UNKNOWN_ERROR:
+                                output.textContent = "An unknown error occurred.";
+                                break;
+                        }
+                    }
+                );
+            } else {
+                output.textContent = "Geolocation is not supported by your browser.";
+            }
+        }
+    </script>
+</body>
+</html>
